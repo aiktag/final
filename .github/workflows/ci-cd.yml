@@ -43,6 +43,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Debug Git Configuration
+        run: |
+          git config --list
+          git status
+
       - name: Deploy to EC2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
