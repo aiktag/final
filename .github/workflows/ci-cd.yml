@@ -1,0 +1,28 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check Out Repo
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' 
+
+
+    - name: Build and Push
+      run: |
+        cd ~/web
+        pm2 stop server.js
+        git pull origin main
+        pm2 start server.js
