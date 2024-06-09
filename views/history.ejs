@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_98-TgBG9eJSd0_49MrxOKv2_exUhL8I&callback=mapStart"
+        async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+        crossorigin="anonymous"></script>
+    <style>
+        .narrow-columns .card {
+            max-width: 300px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="" style="background-color:  #4677da;">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Weather</a>
+                <h3 class="navbar-nav text-white text-center">Welcome <%=user.username%>
+                </h3>
+                <ul class="navbar-nav d-flex flex-row me-1">
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link text-white" href="/archive"><i class="fas fa-envelope mx-1"></i> Movie</a>
+                    </li>
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link text-white" href="/country"><i class="fas fa-envelope mx-1"></i>
+                            Countries</a>
+                    </li>
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link text-white" href="/history"><i class="fas fa-envelope mx-1"></i> History</a>
+                    </li>
+                    <li class="nav-item me-3 me-lg-0">
+                        <a class="nav-link text-white" href="/weather"><i class="fas fa-envelope mx-1"></i> Main</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user mx-1"></i> Profile
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/logout">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container pt-2 h-100">
+            <% if (history && history.length> 0) { %>
+                <% history.forEach(weatherData=> { %>
+                    <div class="card" style="color: #4B515D;">
+                        <div class="card-body p-2">
+                            <p>Created Date: <%= new Date(weatherData.createdAt).toLocaleDateString("en-US") %>
+                            </p>
+                            <h6 class="""><%= weatherData.city %></h6>
+                            <h6 class=" display-4 mb-0 font-weight-bold" style="color: #1C2331;">
+                                <%= weatherData.temperature %>°C
+                            </h6>
+                            <span class="small" style="color: #868B94">
+                                <%= weatherData.description %>
+                            </span>
+                            <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                                    <%= weatherData.windSpeed %> m/s
+                                </span></div>
+                            <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                                    <%= weatherData.humidity %>%
+                                </span></div>
+                            <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                                    <%= weatherData.pressure %> mb
+                                </span></div>
+                            <img src="https://openweathermap.org/img/wn/<%=weatherData.icon%>@2x.png" width="100px">
+                        </div>
+                    </div>
+                    <% }) %>
+        </div>
+        </div>
+        <% } else { %>
+            <div class="text-center">No weather history found.</div>
+            <% } %>
+                <div class="container pt-2 h-100">
+                    <% if (archiveHistory && archiveHistory.length> 0) { %>
+                        <% archiveHistory.forEach(function(data) { %>
+                            <div class="card" style="color: #4B515D; ">
+                                <div class="card-body p-2">
+                                    <h6 class="">
+                                        <%= data.title %>
+                                    </h6>
+                                    <img src="<%= data.poster %>" class="img-fluid" width="100px">
+                                    <div class="mt-5 mb-4">
+                                        <div><strong>Year:</strong>
+                                            <%= data.year %>
+                                        </div>
+                                        <div><strong>Type:</strong>
+                                            <%= data.type %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <% } else { %>
+                                <div class="col-md-6">
+                                    <div class="text-center">No archive history found.</div>
+                                </div>
+                                <% } %>
+
+                                    <% if (countryHistory && countryHistory.length> 0) { %>
+                                        <% countryHistory.forEach(function(data) { %>
+                                            <div class="card" style="color: #4B515D;">
+                                                <h6 class="">
+                                                    <%= data.name %>
+                                                </h6>
+                                                <div><strong>Capital:</strong>
+                                                    <%= data.capital %>
+                                                </div>
+                                                <div><strong>Population:</strong>
+                                                    <%= data.population %>
+                                                </div>
+                                                <div><strong>Region:</strong>
+                                                    <%= data.region %>
+                                                </div>
+                                                <!-- Additional details -->
+                                            </div>
+                                            <% }) %>
+                </div>
+                <% } else { %>
+                    <div class="col-md-6">
+                        <div class="text-center">No country history found.</div>
+                    </div>
+                    <% } %>
+                        </div>
+                        </div>
+                        </div>
+    </section>
+    <footer>
+        <h2 class="text-center">Aikyn Tagirov SE-2213</h2>
+    </footer>
+</body>
+
+</html>
